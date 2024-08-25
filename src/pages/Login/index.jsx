@@ -1,13 +1,32 @@
-import { useState } from 'react'
-import { login } from '../../services/Api'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLoginMutation } from '../../services/Api'
+import { setCredentials } from './authSlice'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
-    const [username, setUserName] = useState('')
+    const [email, setUserEmail] = useState('')
     const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [login] = useLoginMutation()
+
+    useEffect(() => {
+        localStorage.removeItem('token')
+    }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        login(username, password)
+        try {
+            const token = await login({ email, password }).unwrap()
+            dispatch(setCredentials({ token: token, user: null }))
+            localStorage.setItem('token', token)
+            if (token) {
+                navigate('/profile')
+            }
+        } catch (error) {
+            console.error('Connexion échoué', error)
+        }
     }
 
     return (
@@ -17,12 +36,12 @@ function Login() {
                 <h1>Sign In</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="input-wrapper">
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="email">UserEmail</label>
                         <input
                             type="text"
                             id="username"
-                            value={username}
-                            onChange={(e) => setUserName(e.target.value)}
+                            value={email}
+                            onChange={(e) => setUserEmail(e.target.value)}
                         />
                     </div>
                     <div className="input-wrapper">
