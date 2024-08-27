@@ -76,6 +76,33 @@ body {
   font-size: 1.2rem;
 }
 
+.edit-wrappers{
+  width: fit-content;
+  display: flex;
+  margin: auto;
+}
+
+.edit-wrapper{
+  display: flex;
+  flex-direction: column;
+  margin: 0 0.5rem;
+}
+
+.edit-wrapper input{
+  padding: 10px;
+  font-size: 0.8rem;
+
+}
+
+.edit-wrapper button{
+  width: 80%;
+  margin-top: 0.5rem;
+}
+
+.edit-button-right{
+  margin-left: auto;
+}
+
 .footer {
   display: flex;
   justify-content: center;

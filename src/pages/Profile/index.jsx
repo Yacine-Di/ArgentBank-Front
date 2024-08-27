@@ -1,13 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetUserProfileQuery } from '../../services/Api'
 import { selectUserInfo, setCredentials } from '../Login/authSlice'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import Editor from '../../components/Editor/Editor'
 
 function Profil() {
+    const [shouldRefresh, setShouldRefresh] = useState(false)
     const dispatch = useDispatch()
-    const { data, error, isLoading } = useGetUserProfileQuery(undefined, {
-        refetchOnMountOrArgChange: true,
-    })
+    const { data, error, isLoading, refetch } = useGetUserProfileQuery(
+        undefined,
+        {
+            refetchOnMountOrArgChange: true,
+        }
+    )
+
     const userInfo = useSelector(selectUserInfo)
 
     useEffect(() => {
@@ -16,6 +22,13 @@ function Profil() {
         }
     }, [dispatch, data?.body])
 
+    useEffect(() => {
+        if (shouldRefresh) {
+            refetch()
+            setShouldRefresh(false)
+        }
+    }, [refetch, shouldRefresh])
+
     if (error) return <p>Error: {error}</p>
     if (isLoading) return <p>Loading...</p>
 
@@ -23,11 +36,9 @@ function Profil() {
         <main className="main bg-dark">
             <div className="header">
                 <h1>
-                    Welcome back
-                    <br />
-                    {userInfo?.firstName} {userInfo?.lastName}!
+                    Welcome back {userInfo?.firstName} {userInfo?.lastName} !
                 </h1>
-                <button className="edit-button">Edit Name</button>
+                <Editor setShouldRefresh={setShouldRefresh} />
             </div>
             <h2 className="sr-only">Accounts</h2>
             <section className="account">

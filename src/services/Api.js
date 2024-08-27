@@ -6,7 +6,6 @@ export const api = createApi({
         baseUrl: 'http://localhost:3001/api/v1/user/',
         prepareHeaders: (headers) => {
             const token = localStorage.getItem('token')
-            console.log(token)
 
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`)
@@ -35,7 +34,21 @@ export const api = createApi({
                 method: 'POST',
             }),
         }),
+        editUserProfile: builder.mutation({
+            query: ({ firstName, lastName }) => ({
+                url: 'profile',
+                method: 'PUT',
+                body: {
+                    firstName: firstName,
+                    lastName: lastName,
+                },
+            }),
+        }),
     }),
 })
 
-export const { useLoginMutation, useGetUserProfileQuery } = api
+export const {
+    useLoginMutation,
+    useGetUserProfileQuery,
+    useEditUserProfileMutation,
+} = api
