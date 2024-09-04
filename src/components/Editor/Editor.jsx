@@ -11,6 +11,8 @@ function Editor({ setShouldRefresh }) {
         setIsEditable(!isEditable)
     }
 
+    // Lance le call API pour mettre à jour la base de donnée
+    // Rafraichit le composant et réinitialise les imputs
     const handleSaveClick = async () => {
         if (firstName.length && lastName.length > 0) {
             await editUserProfile({ firstName, lastName })

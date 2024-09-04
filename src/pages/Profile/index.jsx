@@ -14,14 +14,16 @@ function Profil() {
         }
     )
 
-    const userInfo = useSelector(selectUserInfo)
-
+    // Met à jour le user du store
     useEffect(() => {
         if (data?.body) {
             dispatch(setCredentials({ user: data.body }))
         }
     }, [dispatch, data?.body])
 
+    const userInfo = useSelector(selectUserInfo)
+
+    // Met à jour le composant après modification du nom et prénom dans le composant enfant Editor
     useEffect(() => {
         if (shouldRefresh) {
             refetch()

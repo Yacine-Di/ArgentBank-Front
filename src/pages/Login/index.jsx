@@ -15,11 +15,13 @@ function Login() {
         localStorage.removeItem('token')
     }, [])
 
+    // Lance le call API pour récupérer le JWT token afin d'accéder aux ressources privées
+    // Gère la navigation
     const handleSubmit = async (event) => {
         event.preventDefault()
         try {
             const token = await login({ email, password }).unwrap()
-            dispatch(setCredentials({ token: token, user: null }))
+            dispatch(setCredentials({ token: token }))
             localStorage.setItem('token', token)
             if (token) {
                 navigate('/profile')
