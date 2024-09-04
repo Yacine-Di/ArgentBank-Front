@@ -11,11 +11,12 @@ function Login() {
     const navigate = useNavigate()
     const [login] = useLoginMutation()
 
+    //suppression du JWT lors de l'arrivé sur la page Login car pas de encore maintien de connexion
     useEffect(() => {
         localStorage.removeItem('token')
     }, [])
 
-    // Lance le call API pour récupérer le JWT token afin d'accéder aux ressources privées
+    // Lance le call API pour récupérer le JWT afin d'accéder aux ressources privées
     // Gère la navigation
     const handleSubmit = async (event) => {
         event.preventDefault()
