@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetUserProfileQuery } from '../../services/Api'
-import { selectToken, selectUserInfo, setCredentials } from '../Login/authSlice'
+import { selectUserInfo, setCredentials } from '../Login/authSlice'
 import { useEffect, useState } from 'react'
 import Editor from '../../components/Editor/Editor'
 
 function Profil() {
-    const token = useSelector(selectToken)
     const [shouldRefresh, setShouldRefresh] = useState(false)
     const dispatch = useDispatch()
     const { data, error, isLoading, refetch } = useGetUserProfileQuery(
@@ -23,6 +22,7 @@ function Profil() {
     }, [dispatch, data?.body])
 
     const userInfo = useSelector(selectUserInfo)
+
     // Met à jour le composant après modification du nom et prénom dans le composant enfant Editor
     useEffect(() => {
         if (shouldRefresh) {
@@ -31,7 +31,6 @@ function Profil() {
         }
     }, [refetch, shouldRefresh])
 
-    if (!token) return <p>Accès non authorisé</p>
     if (error) return <p>Error: {error}</p>
     if (isLoading) return <p>Loading...</p>
 
