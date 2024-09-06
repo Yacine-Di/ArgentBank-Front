@@ -2,8 +2,14 @@ import './index.css'
 import iconChat from '../../assets/icon-chat.png'
 import iconMoney from '../../assets/icon-money.png'
 import iconSecurity from '../../assets/icon-security.png'
+import { useEffect } from 'react'
 
 function Home() {
+    //suppression du JWT lors de l'arrivé sur la page Login car pas encore de maintien de connexion
+    useEffect(() => {
+        localStorage.removeItem('token')
+    }, [])
+
     return (
         <main>
             <div className="hero">

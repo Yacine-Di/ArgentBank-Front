@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLoginMutation } from '../../services/Api'
 import { setCredentials } from './authSlice'
@@ -10,11 +10,6 @@ function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [login] = useLoginMutation()
-
-    //suppression du JWT lors de l'arrivé sur la page Login car pas de encore maintien de connexion
-    useEffect(() => {
-        localStorage.removeItem('token')
-    }, [])
 
     // Lance le call API pour récupérer le JWT afin d'accéder aux ressources privées
     // Gère la navigation

@@ -31,7 +31,7 @@ function Profil() {
         }
     }, [refetch, shouldRefresh])
 
-    if (error) return <p>Error: {error}</p>
+    if (error) return <p>Error: {error.data.message}</p>
     if (isLoading) return <p>Loading...</p>
 
     return (
