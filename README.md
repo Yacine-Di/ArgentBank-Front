@@ -11,6 +11,7 @@ Developed using React, Redux, and RTK Query for REST API calls, ArgentBank offer
 -   React
 -   Redux, RTK, RTK Query
 -   CSS
+-   REST API
 -   Swagger
 -   JWToken
 
